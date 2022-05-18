@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище de9Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Client_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_FName" Type="varchar" MaxLength="50" />
+          <Property Name="Client_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Client_Otchestvo" Type="varchar" MaxLength="50" />
+          <Property Name="Client_BDay" Type="date" />
+          <Property Name="Client_Adres" Type="varchar" MaxLength="50" />
+          <Property Name="Client_Passport" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usluga">
+          <Key>
+            <PropertyRef Name="Usluga_ID" />
+          </Key>
+          <Property Name="Usluga_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usluga_Vid" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ychet_Polisov">
+          <Key>
+            <PropertyRef Name="Polis_ID" />
+            <PropertyRef Name="Usluga_ID" />
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Polis_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usluga_ID" Type="int" Nullable="false" />
+          <Property Name="Client_ID" Type="int" Nullable="false" />
+          <Property Name="Client_Passport" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Polis_Date" Type="date" />
+          <Property Name="Polis_Srok" Type="date" />
+        </EntityType>
+        <Association Name="FK_Ychet_Polisov_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Ychet_Polisov" Type="Self.Ychet_Polisov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Ychet_Polisov">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ychet_Polisov_Usluga1">
+          <End Role="Usluga" Type="Self.Usluga" Multiplicity="1" />
+          <End Role="Ychet_Polisov" Type="Self.Ychet_Polisov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usluga">
+              <PropertyRef Name="Usluga_ID" />
+            </Principal>
+            <Dependent Role="Ychet_Polisov">
+              <PropertyRef Name="Usluga_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище de9ModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usluga" EntityType="Self.Usluga" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ychet_Polisov" EntityType="Self.Ychet_Polisov" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ychet_Polisov_Client" Association="Self.FK_Ychet_Polisov_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Ychet_Polisov" EntitySet="Ychet_Polisov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ychet_Polisov_Usluga1" Association="Self.FK_Ychet_Polisov_Usluga1">
+            <End Role="Usluga" EntitySet="Usluga" />
+            <End Role="Ychet_Polisov" EntitySet="Ychet_Polisov" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="de9Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Client_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_FName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Client_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Client_Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Client_BDay" Type="DateTime" Precision="0" />
+          <Property Name="Client_Adres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Client_Passport" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ychet_Polisov" Relationship="Self.FK_Ychet_Polisov_Client" FromRole="Client" ToRole="Ychet_Polisov" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usluga">
+          <Key>
+            <PropertyRef Name="Usluga_ID" />
+          </Key>
+          <Property Name="Usluga_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usluga_Vid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ychet_Polisov" Relationship="Self.FK_Ychet_Polisov_Usluga1" FromRole="Usluga" ToRole="Ychet_Polisov" />
+        </EntityType>
+        <EntityType Name="Ychet_Polisov">
+          <Key>
+            <PropertyRef Name="Polis_ID" />
+            <PropertyRef Name="Usluga_ID" />
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Polis_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usluga_ID" Type="Int32" Nullable="false" />
+          <Property Name="Client_ID" Type="Int32" Nullable="false" />
+          <Property Name="Client_Passport" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Polis_Date" Type="DateTime" Precision="0" />
+          <Property Name="Polis_Srok" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Ychet_Polisov_Client" FromRole="Ychet_Polisov" ToRole="Client" />
+          <NavigationProperty Name="Usluga" Relationship="Self.FK_Ychet_Polisov_Usluga1" FromRole="Ychet_Polisov" ToRole="Usluga" />
+        </EntityType>
+        <Association Name="FK_Ychet_Polisov_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Ychet_Polisov" Type="Self.Ychet_Polisov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Ychet_Polisov">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ychet_Polisov_Usluga1">
+          <End Role="Usluga" Type="Self.Usluga" Multiplicity="1" />
+          <End Role="Ychet_Polisov" Type="Self.Ychet_Polisov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usluga">
+              <PropertyRef Name="Usluga_ID" />
+            </Principal>
+            <Dependent Role="Ychet_Polisov">
+              <PropertyRef Name="Usluga_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="de9Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Usluga" EntityType="Self.Usluga" />
+          <EntitySet Name="Ychet_Polisov" EntityType="Self.Ychet_Polisov" />
+          <AssociationSet Name="FK_Ychet_Polisov_Client" Association="Self.FK_Ychet_Polisov_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Ychet_Polisov" EntitySet="Ychet_Polisov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ychet_Polisov_Usluga1" Association="Self.FK_Ychet_Polisov_Usluga1">
+            <End Role="Usluga" EntitySet="Usluga" />
+            <End Role="Ychet_Polisov" EntitySet="Ychet_Polisov" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище de9ModelContainer" CdmEntityContainer="de9Entities1">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="de9Model.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+                <ScalarProperty Name="Client_FName" ColumnName="Client_FName" />
+                <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+                <ScalarProperty Name="Client_Otchestvo" ColumnName="Client_Otchestvo" />
+                <ScalarProperty Name="Client_BDay" ColumnName="Client_BDay" />
+                <ScalarProperty Name="Client_Adres" ColumnName="Client_Adres" />
+                <ScalarProperty Name="Client_Passport" ColumnName="Client_Passport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="de9Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usluga">
+            <EntityTypeMapping TypeName="de9Model.Usluga">
+              <MappingFragment StoreEntitySet="Usluga">
+                <ScalarProperty Name="Usluga_ID" ColumnName="Usluga_ID" />
+                <ScalarProperty Name="Usluga_Vid" ColumnName="Usluga_Vid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ychet_Polisov">
+            <EntityTypeMapping TypeName="de9Model.Ychet_Polisov">
+              <MappingFragment StoreEntitySet="Ychet_Polisov">
+                <ScalarProperty Name="Polis_ID" ColumnName="Polis_ID" />
+                <ScalarProperty Name="Usluga_ID" ColumnName="Usluga_ID" />
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+                <ScalarProperty Name="Client_Passport" ColumnName="Client_Passport" />
+                <ScalarProperty Name="Polis_Date" ColumnName="Polis_Date" />
+                <ScalarProperty Name="Polis_Srok" ColumnName="Polis_Srok" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
